@@ -1553,7 +1553,8 @@ void main() {
     }
 
     #ifdef VOXY
-        if(texture(depthtex1, texcoord).r >= 1) {
+        // [voxy-fix] tolerate rounding of the reverse-Z far plane (1 - 0) after Iris's depth inversion
+        if(texture(depthtex1, texcoord).r >= 0.99999) {
             vec4 VxData = texture(colortex16, texcoord);
             Color.rgb = mix(Color.rgb, VxData.rgb, VxData.a);
         }

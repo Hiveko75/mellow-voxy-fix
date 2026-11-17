@@ -806,9 +806,16 @@ const float f_BIOME_SKY_CONTRIBUTION = (0.3 + BIOME_SKY_CONTRIBUTION > 0.0 ? 0.3
         uniform sampler3D voxelImgSampler_b;
     #endif
 #endif
+#ifdef VOXY_TERRAIN
+    // [voxy-fix] depthtex1 is stale during the Voxy pass; depthtex0 already holds this frame's solid terrain.
+    #define depthtex1 depthtex0
+    #undef USE_LQ_DEPTH
+#endif
 #ifdef VOXY
     #define DISTANT_HORIZONS
-    #define dhDepthTex0 vxDepthTexTrans
+    // [voxy-fix] vxDepthTexTrans is the depth attachment of the pass this shader renders in;
+    // sampling it is a feedback loop (undefined results). Use the opaque LOD depth instead.
+    #define dhDepthTex0 vxDepthTexOpaque
     #define dhDepthTex1 vxDepthTexOpaque
     #define dhProjectionInverse vxProjInv
     #define dhProjection vxProj
