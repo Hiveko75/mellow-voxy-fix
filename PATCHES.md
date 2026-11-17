@@ -1,4 +1,4 @@
-# Mello Voxy Fix — Voxy patch for Mellow 3.5 (MC 26.2 / 26.3)
+# Mellow (Voxy Fix) — Voxy patch for Mellow 3.5 (MC 26.2 / 26.3)
 
 Personal, unofficial patch on top of the Mellow v3.5 Modrinth release. Original
 license files are kept unchanged. Not affiliated with or endorsed by TheCMK —
