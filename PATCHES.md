@@ -22,4 +22,12 @@ Target: Voxy 0.2.20-beta + Iris 1.11.7 (26.3). Untested in-game.
    (inverted to 1 - 0 by Iris) still counts as sky if it doesn't land on
    exactly 1.0.
 
+4. `shaders/program/voxy.json`, `voxy_terrain.glsl`, `voxy_water.glsl` —
+   `colortex8` (Mellow maps it to `minecraft:textures/environment/clouds.png`)
+   is no longer bound for Voxy. Iris loads that texture lazily, so Voxy's bind
+   uploaded it inside Sodium's open terrain render pass, which 26.3 forbids:
+   `IllegalStateException: Close the existing render pass before performing
+   additional commands`. Side effect: with Cloud Style = Blocky, clouds are
+   not drawn in LOD reflections/fog.
+
 Search for `[voxy-fix]` to find every change.

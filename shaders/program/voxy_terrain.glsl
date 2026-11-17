@@ -1566,10 +1566,20 @@ vec4 get_clouds_volumetric(vec3 ViewPosN, vec3 PlayerPosN, vec3 SunGlare, float 
 }
 #ifdef DEFERRED
     #define BLOCKY_CLOUD_TEXTURE colortex3
+#elif defined VOXY_TERRAIN
+    // [voxy-fix] colortex8 is minecraft:textures/environment/clouds.png, which Iris loads lazily.
+    // Binding it from Voxy happens inside an open render pass and crashes 26.3
+    // (Close the existing render pass before performing additional commands).
+    // Not bound for Voxy any more; blocky clouds are skipped in LOD reflections/fog.
+    #define VOXY_NO_BLOCKY_CLOUDS
+    #define BLOCKY_CLOUD_TEXTURE noisetex
 #else
     #define BLOCKY_CLOUD_TEXTURE colortex8
 #endif
 vec4 get_clouds_blocky_volumetric(vec3 ViewPosN, vec3 PlayerPosN, vec3 SunGlare, float Dither, const bool IsSecondLayer) {
+    #ifdef VOXY_NO_BLOCKY_CLOUDS
+        return vec4(0, 0, 0, 1);
+    #endif
     float PLANE_TOP = !IsSecondLayer ? 110.0 : 510;
     float PLANE_BOTTOM = !IsSecondLayer ? 100.0 : 500;
     float CLOUD_SIZE = !IsSecondLayer ? 0.00025 : 0.0001;
