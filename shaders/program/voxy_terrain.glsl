@@ -1222,7 +1222,10 @@ void init_colors() {
         TBN = tbnNormal(player_view(normal, true));
     }
 #endif
-vec2 dCoordx = dFdx(texcoord), dCoordy = dFdy(texcoord);
+// [voxy-fix] A global initializer runs before map_voxy_param_to_varying() sets texcoord, so this read
+// an uninitialized value (NVIDIA prints "texcoord might be used before being initialized" to chat).
+// The result was always a zero gradient; keep that behaviour explicitly.
+vec2 dCoordx = vec2(0.0), dCoordy = vec2(0.0);
 float fogify(float x, float w) {
     return w / (x * x + w);
 }

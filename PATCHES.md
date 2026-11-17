@@ -36,4 +36,10 @@ Target: Voxy 0.2.20-beta + Iris 1.11.7 (26.3). Untested in-game.
    to its unshaded pipeline. Now matches `gbuffers_water`: plain water colour,
    lit once by `tweak_lightmap`.
 
+6. `voxy_terrain.glsl`, `voxy_water.glsl` — `dCoordx`/`dCoordy` were global
+   initializers taking `dFdx(texcoord)` before Voxy sets `texcoord`, which made
+   NVIDIA print `"texcoord" might be used before being initialized` (Voxy posts
+   compiler output to chat). They are now zero gradients: Voxy exits helper
+   invocations before the patch runs, so derivatives there aren't valid anyway.
+
 Search for `[voxy-fix]` to find every change.
