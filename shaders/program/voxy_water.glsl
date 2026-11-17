@@ -2534,7 +2534,9 @@ void voxy_emitFragment(VoxyFragmentParameters param) {
         #endif
         
 		#if WATER_TEXTURE_MODE == 2
-			vec4 BaseColor = vec4(glcolor.rgb*TweakedLM, glcolor.a);
+			// [voxy-fix] upstream bug: TweakedLM is undefined here (Water Texture Mode 2 failed to compile).
+			// Match gbuffers_water: plain water colour, lighting is applied by tweak_lightmap below.
+			vec4 BaseColor = vec4(glcolor.rgb, glcolor.a);
 		#else
 			Color = param.sampledColour;
 			Color.rgb = ( Color.rgb * (Color.rgb * (Color.rgb * 0.305306011 + 0.682171111) + 0.012522878) );

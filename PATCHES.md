@@ -30,4 +30,10 @@ Target: Voxy 0.2.20-beta + Iris 1.11.7 (26.3). Untested in-game.
    additional commands`. Side effect: with Cloud Style = Blocky, clouds are
    not drawn in LOD reflections/fog.
 
+5. `shaders/program/voxy_water.glsl` — upstream bug: with Water Texture
+   Mode 2 the Voxy translucent shader used an undefined `TweakedLM` and failed
+   to compile (`error C1503: undefined variable "TweakedLM"`), so Voxy fell back
+   to its unshaded pipeline. Now matches `gbuffers_water`: plain water colour,
+   lit once by `tweak_lightmap`.
+
 Search for `[voxy-fix]` to find every change.
