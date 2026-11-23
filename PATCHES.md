@@ -52,16 +52,18 @@ Change 5 is for Minecraft 26.2 (Iris 1.11.4, Sodium 0.9.2, Voxy 0.2.19-beta).
      to `>= 0.99999`, so the reverse-Z far plane still counts as sky after Iris inverts
      it.
 
-5. **Black sky with Voxy on Minecraft 26.2** — every program that reads Voxy's depth
-   (`deferred1`, `composite*`, `gbuffers_*`, `dh_*`, `voxy_*`, `lib/distant_horizons.glsl`,
-   `global/outline.glsl`).
-   With Voxy 0.2.19 (the Voxy for 26.2) the Voxy depth textures hold 0 where no LOD was drawn.
-   Mellow reads Voxy's depth wherever the vanilla depth is sky, and took that 0 for terrain at the
-   near plane, so the whole sky came out black (with Voxy rendering off it was fine). Mellow
-   already had this exact case for AMD drivers (`if(Depth <= 0) Depth = 1.0;` under
-   `MC_GL_RENDERER_RADEON`); that guard now also applies whenever Voxy is active, and the depth
-   gathers for outlines and the vanilla-cloud LOD test treat 0 as sky too. No change on 26.3,
-   where Voxy's empty depth is already 1.
+5. **Black sky and no LODs with Voxy on Minecraft 26.2** — every Iris program that reads
+   Voxy's depth (`deferred`, `deferred1`, `composite*`, `gbuffers_*`, `dh_*`; also the unused
+   copies in `lib/distant_horizons.glsl` and `global/outline.glsl`).
+   With Voxy 0.2.19 (the Voxy for 26.2) the Voxy depth reaches Iris programs flipped
+   (reverse-Z: 0 where nothing was drawn, small values for far LODs). Mellow read the empty 0
+   as terrain at the near plane, so the whole sky came out black, and the LODs as terrain right
+   in front of the camera. On 26.2 only (`MC_VERSION` 26.2.x with `VOXY`) every Voxy depth read
+   in an Iris program is now flipped back (`1 - depth`; the low-res LOD depth in `deferred`
+   takes `1 - min` of the four samples, which is the max of the flipped ones). As a safety net,
+   Mellow's AMD guard (`if(Depth <= 0) Depth = 1.0;`) now also applies whenever Voxy is active.
+   The Voxy patches themselves (`voxy_terrain.glsl`, `voxy_water.glsl`) are compiled by Voxy,
+   not Iris, and are unchanged. Nothing changes on 26.3.
 
 ## Building
 

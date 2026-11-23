@@ -410,6 +410,10 @@ void main() {
 
 		#ifdef DISTANT_HORIZONS
 			float DhDepth = texture(dhDepthTex0, ScreenPos.xy).x;
+			// [voxy-fix] Voxy 0.2.19 (MC 26.2) depth reaches Iris programs flipped (reverse-Z): flip it back
+			#if (defined VOXY) && MC_VERSION >= 260200 && MC_VERSION < 260300
+				DhDepth = 1.0 - DhDepth;
+			#endif
 			// [voxy-fix] Voxy 0.2.19 (MC 26.2) leaves depth 0 where it drew nothing: treat it as sky
 			#ifdef VOXY
 				if(DhDepth <= 0) DhDepth = 1.0;
