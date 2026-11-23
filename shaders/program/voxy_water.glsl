@@ -1152,7 +1152,8 @@ float get_depth_solid(vec2 ScreenPos, out bool IsDH) {
         if (Depth >= 1) {
             Depth = texture(dhDepthTex1, ScreenPos).x;
             IsDH = true;
-            #ifdef MC_GL_RENDERER_RADEON
+            // [voxy-fix] Voxy 0.2.19 (MC 26.2) leaves depth 0 where it drew nothing: treat it as sky, like the AMD case
+            #if defined MC_GL_RENDERER_RADEON || defined VOXY
                 if(Depth <= 0) Depth = 1.0;
             #endif
         }
@@ -1173,7 +1174,8 @@ float get_depth(vec2 ScreenPos, out bool IsDH) {
         if (Depth >= 1) {
             Depth = texture(dhDepthTex0, ScreenPos).x;
             IsDH = true;
-            #ifdef MC_GL_RENDERER_RADEON
+            // [voxy-fix] Voxy 0.2.19 (MC 26.2) leaves depth 0 where it drew nothing: treat it as sky, like the AMD case
+            #if defined MC_GL_RENDERER_RADEON || defined VOXY
                 if(Depth <= 0) Depth = 1.0;
             #endif
         }
@@ -1199,7 +1201,8 @@ float get_depth_solid_lq(vec2 ScreenPos, out bool IsDH) {
                 Depth = texture(dhDepthTex1, ScreenPos).x;
             #endif
             IsDH = true;
-            #ifdef MC_GL_RENDERER_RADEON
+            // [voxy-fix] Voxy 0.2.19 (MC 26.2) leaves depth 0 where it drew nothing: treat it as sky, like the AMD case
+            #if defined MC_GL_RENDERER_RADEON || defined VOXY
                 if(Depth <= 0) Depth = 1.0;
             #endif
         }

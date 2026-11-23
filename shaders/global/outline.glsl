@@ -16,6 +16,10 @@ vec3 get_outline(vec3 Color, vec3 ScreenPos, ivec2 FragCoord) {
         if(m > 0) {
             if(m < 4) return Color;
             DepthSamples = textureGatherOffsets(dhDepthTex0, texcoord, Offsets);
+            // [voxy-fix] Voxy 0.2.19 (MC 26.2) leaves depth 0 where it drew nothing: treat it as sky
+            #ifdef VOXY
+                DepthSamples = mix(DepthSamples, vec4(1.0), vec4(lessThanEqual(DepthSamples, vec4(0.0))));
+            #endif
         }
     #endif
     float DepthAvgL = linearize_depth(dot(DepthSamples, vec4(0.25)));

@@ -14,6 +14,7 @@ endorsed by TheCMK; the original license files are kept unchanged.
 Tested in game with Minecraft 26.3, Fabric, Iris 1.11.7, Sodium 0.9.3-beta.1,
 Voxy 0.2.20-beta and an NVIDIA RTX 5090 (driver 621.24): no crash, Voxy LODs render
 with shading, translucent LOD water and glass work, and no compiler output in chat.
+Change 5 is for Minecraft 26.2 (Iris 1.11.4, Sodium 0.9.2, Voxy 0.2.19-beta).
 
 ## Changes
 
@@ -50,6 +51,17 @@ with shading, translucent LOD water and glass work, and no compiler output in ch
    - The LOD-translucent overlay test in `deferred1` is relaxed from `depthtex1 >= 1`
      to `>= 0.99999`, so the reverse-Z far plane still counts as sky after Iris inverts
      it.
+
+5. **Black sky with Voxy on Minecraft 26.2** — every program that reads Voxy's depth
+   (`deferred1`, `composite*`, `gbuffers_*`, `dh_*`, `voxy_*`, `lib/distant_horizons.glsl`,
+   `global/outline.glsl`).
+   With Voxy 0.2.19 (the Voxy for 26.2) the Voxy depth textures hold 0 where no LOD was drawn.
+   Mellow reads Voxy's depth wherever the vanilla depth is sky, and took that 0 for terrain at the
+   near plane, so the whole sky came out black (with Voxy rendering off it was fine). Mellow
+   already had this exact case for AMD drivers (`if(Depth <= 0) Depth = 1.0;` under
+   `MC_GL_RENDERER_RADEON`); that guard now also applies whenever Voxy is active, and the depth
+   gathers for outlines and the vanilla-cloud LOD test treat 0 as sky too. No change on 26.3,
+   where Voxy's empty depth is already 1.
 
 ## Building
 
