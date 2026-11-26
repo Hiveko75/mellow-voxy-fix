@@ -65,11 +65,25 @@ Change 5 is for Minecraft 26.2 (Iris 1.11.4, Sodium 0.9.2, Voxy 0.2.19-beta).
    The Voxy patches themselves (`voxy_terrain.glsl`, `voxy_water.glsl`) are compiled by Voxy,
    not Iris, and are unchanged. Nothing changes on 26.3.
 
+6. **Flashing sky without Voxy on Minecraft 26.2** — new `prepare` program (`program/prepare.vsh`,
+   `program/prepare.fsh` and the `world*/prepare.*` includes).
+   Mellow draws its sky in `deferred1` on top of what the sky programs left in `colortex0` (the
+   vanilla sun and moon). On 26.2 with Iris 1.11.2 and Voxy switched off, `colortex0` still held the
+   previous frame's picture every other frame, although the pack asks for it to be cleared
+   (`colortex0Clear = true`). The sky, stars, sun and moon were then added twice on those frames, so
+   the whole sky flashed, most visibly at night. Found with debug views: the sky mask, the sky
+   colour and the stars on their own were steady, only `colortex0` before `deferred1` alternated
+   (the sun's glow doubled, and a moon drawn without blending showed as a darker square in the
+   bright frames). A full-screen `prepare` pass, which Iris runs after the shadow pass and before the
+   sky, now writes 0 to `colortex0`. Confirmed in game on 26.2 (Iris 1.11.2, Sodium 0.9.1, Voxy
+   0.2.19 installed but off): the flashing is gone. It costs one cheap full-screen pass and changes
+   nothing where the buffer was already cleared.
+
 ## Building
 
-GitHub Actions packages the pack on every push (Actions → latest run → artifact
-**Mellow v3.5 Fix**, which is the shader pack itself). Pushing a `v*` tag also attaches
-it to a release.
+GitHub Actions packages the pack when the workflow is started by hand (Actions → Build
+shader pack → Run workflow; artifact **Mellow v3.5 Fix**, which is the shader pack itself).
+Pushing a `v*` tag also builds it and attaches it to a release.
 
 ## Notes outside the pack
 
