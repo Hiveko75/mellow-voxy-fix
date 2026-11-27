@@ -51,10 +51,16 @@ with shading, translucent LOD water and glass work, and no compiler output in ch
      to `>= 0.99999`, so the reverse-Z far plane still counts as sky after Iris inverts
      it.
 
+## Translations
+
+- `shaders/lang/hu_HU.lang`: Hungarian settings menu (all 325 texts of `en_US.lang`: setting
+  names, values and tooltips), made for the Vanilla Finest modpacks. Not a shader change; it can go
+  into the official Mellow as it is.
+
 ## Building
 
-GitHub Actions packages the pack on every push (Actions → latest run → artifact
-**Mellow v3.5 Fix**, which is the shader pack itself). Pushing a `v*` tag also attaches
+GitHub Actions packages the pack when started by hand (Actions → Build shader pack → artifact
+**Mellow v3.5 Fix**, which is the shader pack itself). Pushing a `v*` tag builds it and attaches
 it to a release.
 
 ## Notes outside the pack

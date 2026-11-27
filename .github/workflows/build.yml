@@ -1,13 +1,15 @@
 name: Build shader pack
 
+# Started by hand (Actions -> Run workflow) or by pushing a release tag: no builds on other pushes or pull requests.
 on:
   push:
-    branches: [main]
-    tags: ['v*']
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 jobs:
   build:
@@ -28,10 +30,17 @@ jobs:
         with:
           name: Mellow v3.5 Fix
           path: pack/
+          retention-days: 14
 
       - name: Zip for release (tags only)
         if: startsWith(github.ref, 'refs/tags/')
         run: cd pack && zip -qr "../Mellow v3.5 Fix.zip" .
+
+      - name: Attest build provenance
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/attest@v4
+        with:
+          subject-path: 'Mellow v3.5 Fix.zip'
 
       - name: Publish release (tags only)
         if: startsWith(github.ref, 'refs/tags/')
