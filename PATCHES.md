@@ -79,6 +79,12 @@ Change 5 is for Minecraft 26.2 (Iris 1.11.4, Sodium 0.9.2, Voxy 0.2.19-beta).
    0.2.19 installed but off): the flashing is gone. It costs one cheap full-screen pass and changes
    nothing where the buffer was already cleared.
 
+## Translations
+
+- `shaders/lang/hu_HU.lang`: Hungarian settings menu (all 325 texts of `en_US.lang`: setting
+  names, values and tooltips), made for the Vanilla Finest modpacks. Not a shader change; it can go
+  into the official Mellow as it is.
+
 ## Building
 
 GitHub Actions packages the pack when the workflow is started by hand (Actions → Build

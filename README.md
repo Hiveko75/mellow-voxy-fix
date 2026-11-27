@@ -9,4 +9,6 @@ Not an official Mellow release and not affiliated with TheCMK. The first commit 
 unmodified 3.5 release, so the commit diff shows every change; each one is also marked
 `[voxy-fix]` in the shader files.
 
+Also adds a Hungarian translation of the settings menu (`shaders/lang/hu_HU.lang`).
+
 **What changed and why: [PATCHES.md](PATCHES.md)**
