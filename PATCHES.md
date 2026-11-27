@@ -14,7 +14,10 @@ endorsed by TheCMK; the original license files are kept unchanged.
 Tested in game with Minecraft 26.3, Fabric, Iris 1.11.7, Sodium 0.9.3-beta.1,
 Voxy 0.2.20-beta and an NVIDIA RTX 5090 (driver 621.24): no crash, Voxy LODs render
 with shading, translucent LOD water and glass work, and no compiler output in chat.
-Change 5 is for Minecraft 26.2 (Iris 1.11.4, Sodium 0.9.2, Voxy 0.2.19-beta).
+Change 5 was found on Minecraft 26.2 (Iris 1.11.2, Sodium 0.9.1, Voxy 0.2.19-beta) and applies on
+every version (on 26.3 the buffer is already cleared, so nothing changes there).
+An earlier 26.2 Voxy depth fix (made for Iris 1.11.4) was removed: with Iris 1.11.2, which the 26.2
+pack uses, Voxy works with the unchanged code.
 
 ## Changes
 
@@ -52,20 +55,7 @@ Change 5 is for Minecraft 26.2 (Iris 1.11.4, Sodium 0.9.2, Voxy 0.2.19-beta).
      to `>= 0.99999`, so the reverse-Z far plane still counts as sky after Iris inverts
      it.
 
-5. **Black sky and no LODs with Voxy on Minecraft 26.2** — every Iris program that reads
-   Voxy's depth (`deferred`, `deferred1`, `composite*`, `gbuffers_*`, `dh_*`; also the unused
-   copies in `lib/distant_horizons.glsl` and `global/outline.glsl`).
-   With Voxy 0.2.19 (the Voxy for 26.2) the Voxy depth reaches Iris programs flipped
-   (reverse-Z: 0 where nothing was drawn, small values for far LODs). Mellow read the empty 0
-   as terrain at the near plane, so the whole sky came out black, and the LODs as terrain right
-   in front of the camera. On 26.2 only (`MC_VERSION` 26.2.x with `VOXY`) every Voxy depth read
-   in an Iris program is now flipped back (`1 - depth`; the low-res LOD depth in `deferred`
-   takes `1 - min` of the four samples, which is the max of the flipped ones). As a safety net,
-   Mellow's AMD guard (`if(Depth <= 0) Depth = 1.0;`) now also applies whenever Voxy is active.
-   The Voxy patches themselves (`voxy_terrain.glsl`, `voxy_water.glsl`) are compiled by Voxy,
-   not Iris, and are unchanged. Nothing changes on 26.3.
-
-6. **Flashing sky without Voxy on Minecraft 26.2** — new `prepare` program (`program/prepare.vsh`,
+5. **Flashing sky without Voxy on Minecraft 26.2** — new `prepare` program (`program/prepare.vsh`,
    `program/prepare.fsh` and the `world*/prepare.*` includes).
    Mellow draws its sky in `deferred1` on top of what the sky programs left in `colortex0` (the
    vanilla sun and moon). On 26.2 with Iris 1.11.2 and Voxy switched off, `colortex0` still held the

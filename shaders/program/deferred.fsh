@@ -339,16 +339,8 @@ void main() {
 
     #ifdef DISTANT_HORIZONS
     Color.g = textureOffset(dhDepthTex0, texcoord, ivec2(-1, -1)).r;
-    // [voxy-fix] Voxy 0.2.19 (MC 26.2) depth reaches Iris programs flipped (reverse-Z): flip it back (max of flipped = 1 - min)
-    #if (defined VOXY) && MC_VERSION >= 260200 && MC_VERSION < 260300
-    Color.g = min(Color.g, textureOffset(dhDepthTex0, texcoord, ivec2(-1, 1)).r);
-    Color.g = min(Color.g, textureOffset(dhDepthTex0, texcoord, ivec2(1, -1)).r);
-    Color.g = min(Color.g, textureOffset(dhDepthTex0, texcoord, ivec2(1, 1)).r);
-    Color.g = 1.0 - Color.g;
-    #else
     Color.g = max(Color.g, textureOffset(dhDepthTex0, texcoord, ivec2(-1, 1)).r);
     Color.g = max(Color.g, textureOffset(dhDepthTex0, texcoord, ivec2(1, -1)).r);
     Color.g = max(Color.g, textureOffset(dhDepthTex0, texcoord, ivec2(1, 1)).r);
-    #endif
     #endif
 }
