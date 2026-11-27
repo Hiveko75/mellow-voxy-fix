@@ -60,4 +60,4 @@ jobs:
           TAG: ${{ inputs.release }}
         run: |
           gh release create "$TAG" "Mellow v3.5 Fix.zip" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-            --title "Mellow v3.5 Fix ($TAG)" --notes "Mellow 3.5 by TheCMK with fixes (see PATCHES.md). Not an official Mellow release."
+            --title "Mellow v3.5 Fix ($TAG)" --notes "Mellow 3.5 by TheCMK with fixes for Voxy on Minecraft 26.3 and the flashing sky on 26.2 (see PATCHES.md), and a Hungarian settings menu. Not an official Mellow release."
