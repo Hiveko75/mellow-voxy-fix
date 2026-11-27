@@ -286,7 +286,7 @@ value.LUT_FILE.9=mellow.png
 value.LUT_FILE.10=punchy.png
 value.COLORED_LIGHTS.0=Ki
 value.COLORED_LIGHTS.1=Voxeles
-value.COLORED_LIGHTS.2=Képernyőtéri
+value.COLORED_LIGHTS.2=Képernyőalapú
 value.COLORED_LIGHTS.3=Hibrid
 
 screen.COLOR_GRADING=Színkorrekció
