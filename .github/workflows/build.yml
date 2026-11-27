@@ -53,11 +53,19 @@ jobs:
         with:
           files: "Mellow v3.5 Fix.zip"
 
+      # A new tag makes a new release. An existing one is updated in place (there is only one Mellow
+      # v3.5 Fix release): its tag moves to this commit and the zip is replaced.
       - name: Publish release (manual run with a release tag)
         if: inputs.release != ''
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.release }}
         run: |
-          gh release create "$TAG" "Mellow v3.5 Fix.zip" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-            --title "Mellow v3.5 Fix ($TAG)" --notes "Mellow 3.5 by TheCMK with fixes for Voxy on Minecraft 26.3 and the flashing sky on 26.2 (see PATCHES.md), and a Hungarian settings menu. Not an official Mellow release."
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            git tag -f "$TAG" "$GITHUB_SHA"
+            git push -f origin "refs/tags/$TAG"
+            gh release upload "$TAG" "Mellow v3.5 Fix.zip" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$TAG" "Mellow v3.5 Fix.zip" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+              --title "Mellow v3.5 Fix ($TAG)" --notes "Mellow 3.5 by TheCMK with fixes for Voxy on Minecraft 26.3 and the flashing sky on 26.2 (see PATCHES.md), and a Hungarian settings menu. Not an official Mellow release."
+          fi
