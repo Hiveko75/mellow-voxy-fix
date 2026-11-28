@@ -1,4 +1,4 @@
-option.BLOOM=Fényragyogás (Bloom)
+option.BLOOM=Ragyogás (Bloom)
 option.BLOOM.comment=A fényes tárgyak ragyogni látszanak tőle. Teljesítményigény: §6Magas
 option.BLOOM_CURVE=Ragyogás görbéje
 option.BLOOM_CURVE.comment=Azt szabályozza, mennyire járulnak hozzá a ragyogáshoz a halvány képpontok a fényesekhez képest
@@ -311,7 +311,7 @@ screen.AURORA_SETTINGS=Sarki fény beállításai
 screen.DH_SETTINGS=Distant Horizons és Voxy
 screen.CLOUDS=Felhők beállítása
 screen.WAVING_BLOCK_SETTINGS=Hullámzó blokkok beállításai
-screen.BLOOM_SETTINGS=Ragyogás beállításai
+screen.BLOOM_SETTINGS=Ragyogás (Bloom) beállításai
 screen.ANTI_ALIASING=Élsimítás
 screen.COLORS=Színek
 screen.DOF_SETTINGS=Mélységélesség beállításai
