@@ -1,5 +1,5 @@
 option.BLOOM=Ragyogás (Bloom)
-option.BLOOM.comment=A fényes tárgyak ragyogni látszanak tőle. Teljesítményigény: §6Magas
+option.BLOOM.comment=A fényes tárgyak fényudvarszerűen ragyogni látszanak tőle. Teljesítményigény: §6Magas
 option.BLOOM_CURVE=Ragyogás görbéje
 option.BLOOM_CURVE.comment=Azt szabályozza, mennyire járulnak hozzá a ragyogáshoz a halvány képpontok a fényesekhez képest
 option.BORDER_FOG=Peremköd
