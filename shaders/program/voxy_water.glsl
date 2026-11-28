@@ -1481,7 +1481,8 @@ vec3 get_end_sky(vec3 ViewPosN, vec3 PlayerPosN) {
 
     vec3 Final = SkyT + SkyG * (fogify(upDot + 0.2, 0.05)); 
 
-    Final *= 1 - fogify(max(upDot + 0.2, 0), 0.02); // Void at the bottom
+    // [vanilla-finest] no black void at the bottom: the End sky is the same purple all round (was:
+    // Final *= 1 - fogify(max(upDot + 0.2, 0), 0.02); // Void at the bottom)
 
     return Final;
 }

@@ -69,6 +69,16 @@ pack uses, Voxy works with the unchanged code.
    0.2.19 installed but off): the flashing is gone. It costs one cheap full-screen pass and changes
    nothing where the buffer was already cleared.
 
+## Look changes for Vanilla Finest
+
+Not fixes; marked `[vanilla-finest]` in the shader files.
+
+- **End sky without the black void below the horizon** — `global/atmosphere/sky.glsl` and its copies in
+  `deferred1.fsh`, `gbuffers_water.fsh`, `dh_water.fsh`, `voxy_water.glsl`. Mellow's End sky is a dark
+  purple (colour scheme 1: 0.15, 0.10, 0.20, about `#261A33`, from the End sky settings) with the End
+  lights above it, and darkened to black below 0.2 under the horizon ("Void at the bottom"). That
+  darkening is left out, so the lower half has the same purple as the top.
+
 ## Translations
 
 - `shaders/lang/hu_HU.lang`: Hungarian settings menu (all 325 texts of `en_US.lang`: setting
