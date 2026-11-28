@@ -78,6 +78,11 @@ Not fixes; marked `[vanilla-finest]` in the shader files.
   purple (colour scheme 1: 0.15, 0.10, 0.20, about `#261A33`, from the End sky settings) with the End
   lights above it, and darkened to black below 0.2 under the horizon ("Void at the bottom"). That
   darkening is left out, so the lower half has the same purple as the top.
+- **End fog leaves the sky alone** — `global/atmosphere/fog.glsl` and its copies in `deferred1.fsh`,
+  `gbuffers_water.fsh`, `dh_water.fsh`, `voxy_water.glsl`. The End fog darkens everything below height 30 (+10)
+  towards the void; for the sky it took the direction below the horizon as a low height and painted the lower
+  half black, also over a custom skybox (Skyboxify's End sky with Custom Skyboxes on). Sky pixels (depth 1) now
+  keep their colour; blocks below the islands still fade into the void as before.
 
 ## Translations
 

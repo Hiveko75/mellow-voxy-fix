@@ -1962,6 +1962,7 @@ vec3 get_blindness_fog(float Dist, vec3 Color) {
     return Color * (1 - Dist);
 }
 vec3 get_end_fog(float Dist, vec3 Color, float Depth, vec3 PlayerPos) {
+    if(Depth >= 1) return Color; // [vanilla-finest] the sky (also custom skyboxes) keeps its colour below the horizon
     if(Dist >= furthest) {
         PlayerPos = normalize(PlayerPos) * furthest;
     }
